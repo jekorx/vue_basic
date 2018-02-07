@@ -6,15 +6,20 @@ const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 // 是否是开发模式
 const isDev = process.env.NODE_ENV === 'development'
 
+// 路径转换
+function resolve(dir) {
+  return path.join(__dirname, '.', dir)
+}
+
 // webpack基础配置
 const config = {
   target: 'web',
   // 入口
-  entry: path.join(__dirname, 'src/index.js'),
+  entry: resolve('src/index.js'),
   // 输出
   output: {
     filename: 'bundle.[hash:8].js',
-    path: path.join(__dirname, 'dist')
+    path: resolve('dist')
   },
   module: {
     rules: [
@@ -77,7 +82,7 @@ const config = {
       // 标题
       title: 'Todo',
       // 模版
-      template: 'src/index.html'
+      template: resolve('src/index.html')
     })
   ]
 }
@@ -127,7 +132,7 @@ if (isDev) {
   // 生产环境配置
   // 配置单独打包依赖js库
   config.entry = {
-    app: path.join(__dirname, 'src/index.js'),
+    app: resolve('src/index.js'),
     // 此处vendor和下面CommonsChunkPlugin中的name相同
     vendor: ['vue']
   }
