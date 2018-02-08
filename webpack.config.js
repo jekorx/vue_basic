@@ -18,7 +18,7 @@ const config = {
   entry: resolve('src/index.js'),
   // 输出
   output: {
-    filename: 'bundle.[hash:8].js',
+    filename: '[name].[hash:6].js',
     path: resolve('dist')
   },
   module: {
@@ -63,7 +63,7 @@ const config = {
             options: {
               // 资源文件小于1024直接转成base64
               limit: 1024,
-              name: '[name].[ext]'
+              name: 'static/[name].[hash:6].[ext]'
             }
           }
         ]
@@ -82,7 +82,9 @@ const config = {
       // 标题
       title: 'Todo',
       // 模版
-      template: resolve('src/index.html')
+      template: resolve('src/index.html'),
+      // 给定的图标路径，可将其添加到输出html中
+      favicon: resolve('src/assets/favicon.ico')
     })
   ]
 }
@@ -137,7 +139,7 @@ if (isDev) {
     vendor: ['vue']
   }
   // 生产环境输出的js名称
-  config.output.filename = '[name].[chunkhash:8].js'
+  config.output.filename = '[name].[chunkhash:6].js'
   // 生产环境stylus配置
   config.module.rules.push({
     test: /\.styl$/,
@@ -164,13 +166,10 @@ if (isDev) {
   })
   config.plugins.push(
     // 单独打包css的文件名，带有8为hash值
-    new ExtractTextWebpackPlugin('styles.[contentHash:8].css'),
+    new ExtractTextWebpackPlugin('styles.[contentHash:6].css'),
+    // 公共代码分离打包
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
-    }),
-    // webpack相关的代码单独打包，两个CommonsChunkPlugin位置不能换
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'runtime'
+      names: ['vendor', 'mainifest']
     }),
     // 混淆相关
     new webpack.optimize.UglifyJsPlugin({
