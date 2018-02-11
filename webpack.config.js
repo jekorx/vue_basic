@@ -4,7 +4,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 
 // 是否是开发模式
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'dev'
 
 // 路径转换
 function resolve(dir) {
