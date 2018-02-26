@@ -3,8 +3,6 @@ import App from './app.vue'
 
 import './assets/styles/global.styl'
 
-const root = document.getElementById('root')
-
 new Vue({
   render: h => h(App)
-}).$mount(root)
+}).$mount('#root')
