@@ -25,7 +25,11 @@ const config = {
     rules: [
       {
         test: /\.vue$/,
-        use: 'vue-loader'
+        loader: 'vue-loader',
+        options: {
+          // 生产模式提取样式
+          extractCSS: !isDev
+        }
       },
       {
         test: /\.js$/,
@@ -157,7 +161,7 @@ if (isDev) {
         {
           loader: 'postcss-loader',
           options: {
-            sourceMap: true
+            sourceMap: false
           }
         },
         'stylus-loader'

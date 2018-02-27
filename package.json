@@ -34,5 +34,19 @@
   },
   "dependencies": {
     "vue": "^2.5.13"
-  }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "last 5 versions",
+    "Chrome >= 34",
+    "Firefox >= 30",
+    "Safari >= 6",
+    "ie > 8",
+    "iOS >= 7",
+    "Android >= 4"
+  ]
 }
