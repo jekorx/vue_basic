@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
 // 是否是开发模式
 const isDev = process.env.NODE_ENV === 'dev'
@@ -150,22 +151,7 @@ if (isDev) {
     // loader处理后依次往上处理，最后打包成css文件
     use: ExtractTextWebpackPlugin.extract({
       fallback: 'style-loader',
-      use: [
-        {
-          loader: 'css-loader',
-          options: {
-            // css压缩
-            minimize: true
-          }
-        },
-        {
-          loader: 'postcss-loader',
-          options: {
-            sourceMap: false
-          }
-        },
-        'stylus-loader'
-      ]
+      use: ['css-loader', 'postcss-loader', 'stylus-loader']
     })
   })
   config.plugins.push(
@@ -175,6 +161,8 @@ if (isDev) {
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'mainifest']
     }),
+    // 压缩css（将vue文件提取出来的css无法压缩，通过该插件将最终的.css压缩）
+    new OptimizeCSSPlugin(),
     // 混淆相关
     new webpack.optimize.UglifyJsPlugin({
       // 压缩
